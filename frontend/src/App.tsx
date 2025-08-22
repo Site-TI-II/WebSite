@@ -1,51 +1,123 @@
+// App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import './App.css';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  CssBaseline,
+  Box
+} from '@mui/material';
 
+const drawerWidth = 240;
+
+// Páginas
 function Home() {
-  return <h2>Bem-vindo ao Organizador do Trabalho Interdisciplinar II</h2>;
+  return <Typography variant="h4">Bem-vindo ao Organizador</Typography>;
 }
 
 function Documentacao() {
-  return <h2>Central de Documentação</h2>;
+  return <Typography variant="h4">Central de Documentação</Typography>;
 }
 
 function Tarefas() {
-  return <h2>Gestão de Tarefas</h2>;
+  return <Typography variant="h4">Gestão de Tarefas</Typography>;
 }
 
 function Calendario() {
-  return <h2>Calendário de Entregas</h2>;
+  return <Typography variant="h4">Calendário de Entregas</Typography>;
 }
 
 function Informacoes() {
-  return <h2>Portal de Informações</h2>;
+  return <Typography variant="h4">Portal de Informações</Typography>;
 }
 
-function App() {
+export default function App() {
   return (
     <Router>
-      <div className="App">
-        <nav>
-          <ul>
-            <li><Link to="/">Início</Link></li>
-            <li><Link to="/documentacao">Documentação</Link></li>
-            <li><Link to="/tarefas">Tarefas</Link></li>
-            <li><Link to="/calendario">Calendário</Link></li>
-            <li><Link to="/informacoes">Informações</Link></li>
-          </ul>
-        </nav>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/documentacao" element={<Documentacao />} />
-          <Route path="/tarefas" element={<Tarefas />} />
-          <Route path="/calendario" element={<Calendario />} />
-          <Route path="/informacoes" element={<Informacoes />} />
-        </Routes>
-      </div>
+        {/* Barra Superior */}
+        <AppBar
+          position="fixed"
+          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        >
+          <Toolbar>
+            <Typography variant="h6" noWrap component="div">
+              Organizador TI II
+            </Typography>
+          </Toolbar>
+        </AppBar>
+
+        {/* Menu Lateral */}
+        <Drawer
+          variant="permanent"
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: 'border-box'
+            }
+          }}
+        >
+          <Toolbar />
+          <Box sx={{ overflow: 'auto' }}>
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/">
+                  <ListItemText primary="Início" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/documentacao">
+                  <ListItemText primary="Documentação" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/tarefas">
+                  <ListItemText primary="Tarefas" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/calendario">
+                  <ListItemText primary="Calendário" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/informacoes">
+                  <ListItemText primary="Informações" />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Box>
+        </Drawer>
+
+        {/* Conteúdo Principal */}
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+        >
+          <Toolbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/documentacao" element={<Documentacao />} />
+            <Route path="/tarefas" element={<Tarefas />} />
+            <Route path="/calendario" element={<Calendario />} />
+            <Route path="/informacoes" element={<Informacoes />} />
+          </Routes>
+        </Box>
+      </Box>
     </Router>
   );
 }
-
-export default App;
