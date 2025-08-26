@@ -7,15 +7,27 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Chip // Novo import para o "chip"
+  Chip,
+  Tabs,
+  Tab,
+  AppBar
 } from '@mui/material';
 import { 
   ExpandMore as ExpandMoreIcon, 
-  Quiz as QuizIcon // Novo ícone para as perguntas
+  Quiz as QuizIcon,
+  Description as DescriptionIcon,
+  Code as CodeIcon,
+  Group as GroupIcon
 } from '@mui/icons-material';
 
-// Adicionei números às perguntas para um visual mais limpo
-const questionarioData = [
+// Interface para tipar os dados do questionário
+interface QuestionarioItem {
+  pergunta: string;
+  resposta: string;
+}
+
+// Dados do questionário com tipagem adequada
+const questionarioData: QuestionarioItem[] = [
   {
     pergunta: "1. Qual é o tema e o nome do projeto?",
     resposta: "Mess Away. Aplicativo que ajuda na organização e gerenciamento de tarefas e casa."
@@ -46,7 +58,7 @@ const questionarioData = [
   },
   {
     pergunta: "8. Como o projeto se sustentará? Quais são os mecanismos de monetização?",
-    resposta: "O projeto se sustentaria monetariamente por meio de propagandas que podem ser utilizadas para o desbloqueio de funcionalidades “premium” e por meio de uma mensalidade que melhoraria as funcionalidades."
+    resposta: "O projeto se sustentaria monetariamente por meio de propagandas que podem ser utilizadas para o desbloqueio de funcionalidades \"premium\" e por meio de uma mensalidade que melhoraria as funcionalidades."
   },
   {
     pergunta: "9. Como é o fluxo de usuários (User Flow) no sistema a ser desenvolvido?",
@@ -62,41 +74,25 @@ const questionarioData = [
   }
 ];
 
-export default function Documentacao() {
-  // Estado para controlar qual painel está expandido
-  // 'panel0' é o ID do primeiro painel, que começará aberto
+// Componente para a aba de Questionário
+function QuestionarioTab() {
   const [expandedPanel, setExpandedPanel] = useState<string | false>('panel0');
 
-  // Função para lidar com a mudança de expansão
   const handleExpansionChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpandedPanel(isExpanded ? panel : false);
   };
 
   return (
-    // Adicionamos a classe 'fade-in' do seu App.css
-    <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }} className="fade-in">
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="h4" color="primary">
-          Documentação do Projeto
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          Questionário de Escopo e Definição
-        </Typography>
-      </Box>
-
-      <Divider sx={{ mb: 3 }} />
-
-      {questionarioData.map((item, index) => {
+    <Box sx={{ mt: 2 }}>
+      {questionarioData.map((item: QuestionarioItem, index: number) => {
         const isUnanswered = item.resposta === 'Não respondido ainda.';
         const panelId = `panel${index}`;
         
         return (
           <Accordion
             key={panelId}
-            // Controla a expansão através do estado
             expanded={expandedPanel === panelId}
             onChange={handleExpansionChange(panelId)}
-            // Estilo mais limpo, sem sombra e com bordas
             variant="outlined" 
             sx={{ mb: 1.5, '&:last-of-type': { mb: 0 } }}
           >
@@ -105,7 +101,6 @@ export default function Documentacao() {
               aria-controls={`${panelId}-content`}
               id={`${panelId}-header`}
               sx={{
-                // Cor de fundo sutil para o cabeçalho
                 backgroundColor: 'action.hover',
                 '&:hover': {
                   backgroundColor: 'action.selected'
@@ -126,7 +121,7 @@ export default function Documentacao() {
                 sx={{
                   color: isUnanswered ? 'text.disabled' : 'text.primary',
                   whiteSpace: 'pre-wrap',
-                  lineHeight: 1.7 // Melhora a legibilidade da resposta
+                  lineHeight: 1.7
                 }}
               >
                 {item.resposta}
@@ -135,6 +130,110 @@ export default function Documentacao() {
           </Accordion>
         );
       })}
+    </Box>
+  );
+}
+
+// Componente para a aba de Visão Geral
+function VisaoGeralTab() {
+  return (
+    <Box sx={{ mt: 2, p: 2 }}>
+      <Typography variant="h6" gutterBottom>
+        Visão Geral do Projeto
+      </Typography>
+      <Typography paragraph>
+        O Mess Away é um aplicativo inovador projetado para ajudar na organização e gerenciamento de tarefas domésticas.
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+        Objetivos Principais
+      </Typography>
+      <Typography component="ul" sx={{ pl: 2 }}>
+        <li>
+          <Typography component="span">Simplificar a gestão de tarefas domésticas</Typography>
+        </li>
+        <li>
+          <Typography component="span">Melhorar a produtividade e organização pessoal</Typography>
+        </li>
+        <li>
+          <Typography component="span">Facilitar a divisão de tarefas entre membros da família</Typography>
+        </li>
+      </Typography>
+    </Box>
+  );
+}
+
+// Componente para a aba de Equipe
+function EquipeTab() {
+  return (
+    <Box sx={{ mt: 2, p: 2 }}>
+      <Typography variant="h6" gutterBottom>
+        Nossa Equipe
+      </Typography>
+      <Typography paragraph>
+        Conheça os membros dedicados por trás do desenvolvimento do Mess Away.
+      </Typography>
+      {/* Aqui você pode adicionar informações sobre a equipe */}
+    </Box>
+  );
+}
+
+// Componente para a aba de Tecnologia
+function TecnologiaTab() {
+  return (
+    <Box sx={{ mt: 2, p: 2 }}>
+      <Typography variant="h6" gutterBottom>
+        Stack Tecnológico
+      </Typography>
+      <Typography paragraph>
+        Detalhes sobre as tecnologias utilizadas no desenvolvimento do projeto.
+      </Typography>
+      {/* Aqui você pode adicionar informações sobre a stack tecnológica */}
+    </Box>
+  );
+}
+
+// Componente principal com abas
+export default function Documentacao() {
+  const [tabValue, setTabValue] = useState(0);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  };
+
+  return (
+    <Paper elevation={2} sx={{ borderRadius: 2 }} className="fade-in">
+      <Box sx={{ p: 3, pb: 1 }}>
+        <Typography variant="h4" color="primary">
+          Documentação do Projeto
+        </Typography>
+        <Typography variant="subtitle1" color="text.secondary">
+          Detalhes completos sobre o Mess Away
+        </Typography>
+      </Box>
+
+      <Divider />
+
+      <AppBar position="static" color="default" elevation={1}>
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="abas de documentação"
+        >
+          <Tab icon={<DescriptionIcon />} iconPosition="start" label="Visão Geral" />
+          <Tab icon={<QuizIcon />} iconPosition="start" label="Questionário" />
+          <Tab icon={<GroupIcon />} iconPosition="start" label="Equipe" />
+          <Tab icon={<CodeIcon />} iconPosition="start" label="Tecnologia" />
+        </Tabs>
+      </AppBar>
+
+      <Box sx={{ p: 3 }}>
+        {tabValue === 0 && <VisaoGeralTab />}
+        {tabValue === 1 && <QuestionarioTab />}
+        {tabValue === 2 && <EquipeTab />}
+        {tabValue === 3 && <TecnologiaTab />}
+      </Box>
     </Paper>
   );
 }
