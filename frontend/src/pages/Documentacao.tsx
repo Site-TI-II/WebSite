@@ -10,7 +10,9 @@ import {
   Chip,
   Tabs,
   Tab,
-  AppBar
+  AppBar,
+  Card,
+  Button
 } from '@mui/material';
 import { 
   ExpandMore as ExpandMoreIcon, 
@@ -24,6 +26,17 @@ import {
 interface QuestionarioItem {
   pergunta: string;
   resposta: string;
+}
+
+// Interface para membros da equipe
+interface MembroEquipe {
+  nome: string;
+  funcao: string;
+  contato: string;
+  foto: string;
+  whatsapp: string;
+  github: string;
+  linkedin: string;
 }
 
 // Dados do questionário com tipagem adequada
@@ -85,21 +98,21 @@ function QuestionarioTab() {
   return (
     <Box sx={{ mt: 2 }}>
       {questionarioData.map((item: QuestionarioItem, index: number) => {
-        const isUnanswered = item.resposta === 'Não respondido ainda.';
-        const panelId = `panel${index}`;
+        const semResposta = item.resposta === 'Não respondido ainda.';
+        const painelId = `panel${index}`;
         
         return (
           <Accordion
-            key={panelId}
-            expanded={expandedPanel === panelId}
-            onChange={handleExpansionChange(panelId)}
+            key={painelId}
+            expanded={expandedPanel === painelId}
+            onChange={handleExpansionChange(painelId)}
             variant="outlined" 
             sx={{ mb: 1.5, '&:last-of-type': { mb: 0 } }}
           >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls={`${panelId}-content`}
-              id={`${panelId}-header`}
+              aria-controls={`${painelId}-content`}
+              id={`${painelId}-header`}
               sx={{
                 backgroundColor: 'action.hover',
                 '&:hover': {
@@ -112,14 +125,14 @@ function QuestionarioTab() {
                 {item.pergunta}
               </Typography>
               
-              {isUnanswered && (
+              {semResposta && (
                 <Chip label="Pendente" color="warning" size="small" variant="outlined" />
               )}
             </AccordionSummary>
             <AccordionDetails sx={{ backgroundColor: 'background.paper' }}>
               <Typography
                 sx={{
-                  color: isUnanswered ? 'text.disabled' : 'text.primary',
+                  color: semResposta ? 'text.disabled' : 'text.primary',
                   whiteSpace: 'pre-wrap',
                   lineHeight: 1.7
                 }}
@@ -164,6 +177,54 @@ function VisaoGeralTab() {
 
 // Componente para a aba de Equipe
 function EquipeTab() {
+  // Dados da equipe
+  const membrosEquipe: MembroEquipe[] = [
+    {
+      nome: "Ana Silva",
+      funcao: "Desenvolvedora Front-end",
+      contato: "ana.silva@messaway.com",
+      foto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      whatsapp: "+55 (11) 99999-9999",
+      github: "anadev",
+      linkedin: "ana-silva-dev"
+    },
+    {
+      nome: "Carlos Oliveira",
+      funcao: "Desenvolvedor Back-end",
+      contato: "carlos.oliveira@messaway.com",
+      foto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      whatsapp: "+55 (11) 98888-8888",
+      github: "carlosbackend",
+      linkedin: "carlos-oliveira-dev"
+    },
+    {
+      nome: "Mariana Santos",
+      funcao: "Designer UX/UI",
+      contato: "mariana.santos@messaway.com",
+      foto: "https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      whatsapp: "+55 (11) 97777-7777",
+      github: "maridesigner",
+      linkedin: "mariana-santos-ux"
+    },
+    {
+      nome: "Ricardo Ferreira",
+      funcao: "Gerente de Projeto",
+      contato: "ricardo.ferreira@messaway.com",
+      foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      whatsapp: "+55 (11) 96666-6666",
+      github: "ricardopm",
+      linkedin: "ricardo-ferreira-pm"
+    }
+  ];
+
+  const [flippedCards, setFlippedCards] = useState<boolean[]>(new Array(membrosEquipe.length).fill(false));
+
+  const handleFlip = (index: number) => {
+    const newFlippedCards = [...flippedCards];
+    newFlippedCards[index] = !newFlippedCards[index];
+    setFlippedCards(newFlippedCards);
+  };
+
   return (
     <Box sx={{ mt: 2, p: 2 }}>
       <Typography variant="h6" gutterBottom>
@@ -172,7 +233,188 @@ function EquipeTab() {
       <Typography paragraph>
         Conheça os membros dedicados por trás do desenvolvimento do Mess Away.
       </Typography>
-      {/* Aqui você pode adicionar informações sobre a equipe */}
+      
+      {/* Grid responsivo para os cards da equipe */}
+      <Box sx={{ 
+        display: 'grid', 
+        gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
+        gap: 3,
+        mt: 1 
+      }}>
+        {membrosEquipe.map((membro, index) => (
+          <Box
+            key={index}
+            sx={{
+              perspective: '1000px',
+              height: 350
+            }}
+          >
+            <Box
+              sx={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                transition: 'transform 0.6s',
+                transformStyle: 'preserve-3d',
+                transform: flippedCards[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                cursor: 'pointer'
+              }}
+              onClick={() => handleFlip(index)}
+            >
+              {/* Frente do Card */}
+              <Card 
+                className="hover-card" 
+                sx={{ 
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  backfaceVisibility: 'hidden',
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  borderRadius: 2,
+                  overflow: 'hidden',
+                  alignItems: 'center',
+                  textAlign: 'center'
+                }}
+              >
+                {/* Foto do membro */}
+                <Box sx={{ 
+                  width: 120,
+                  height: 120,
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  marginTop: 3,
+                  border: '3px solid',
+                  borderColor: 'primary.main'
+                }}>
+                  <img 
+                    src={membro.foto} 
+                    alt={membro.nome}
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover' 
+                    }} 
+                  />
+                </Box>
+                
+                {/* Informações do membro */}
+                <Box sx={{ p: 2, flexGrow: 1 }}>
+                  <Typography variant="h6" component="div" gutterBottom>
+                    {membro.nome}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    {membro.funcao}
+                  </Typography>
+                </Box>
+                
+                {/* Botão para virar o card */}
+                <Box sx={{ p: 2, pt: 0, width: '100%' }}>
+                  <Button 
+                    variant="outlined" 
+                    fullWidth 
+                    className="custom-button"
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleFlip(index);
+                    }}
+                  >
+                    Ver Contatos
+                  </Button>
+                </Box>
+              </Card>
+
+              {/* Verso do Card (Contatos) */}
+              <Card 
+                sx={{ 
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  backfaceVisibility: 'hidden',
+                  transform: 'rotateY(180deg)',
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  borderRadius: 2,
+                  overflow: 'hidden',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  backgroundColor: 'primary.main',
+                  color: 'white'
+                }}
+              >
+                <Box sx={{ p: 3, flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%' }}>
+                  <Typography variant="h6" gutterBottom>
+                    Contatos
+                  </Typography>
+                  
+                  {/* Email */}
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                      Email
+                    </Typography>
+                    <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                      {membro.contato}
+                    </Typography>
+                  </Box>
+
+                  {/* WhatsApp */}
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                      WhatsApp
+                    </Typography>
+                    <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                      {membro.whatsapp}
+                    </Typography>
+                  </Box>
+
+                  {/* GitHub */}
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                      GitHub
+                    </Typography>
+                    <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                      @{membro.github}
+                    </Typography>
+                  </Box>
+
+                  {/* LinkedIn */}
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                      LinkedIn
+                    </Typography>
+                    <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                      {membro.linkedin}
+                    </Typography>
+                  </Box>
+                </Box>
+
+                {/* Botão para voltar */}
+                <Box sx={{ p: 2, width: '100%' }}>
+                  <Button 
+                    variant="contained" 
+                    fullWidth 
+                    sx={{ 
+                      backgroundColor: 'white',
+                      color: 'primary.main',
+                      '&:hover': {
+                        backgroundColor: 'grey.100'
+                      }
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleFlip(index);
+                    }}
+                  >
+                    Voltar
+                  </Button>
+                </Box>
+              </Card>
+            </Box>
+          </Box>
+        ))}
+      </Box>
     </Box>
   );
 }
@@ -187,7 +429,6 @@ function TecnologiaTab() {
       <Typography paragraph>
         Detalhes sobre as tecnologias utilizadas no desenvolvimento do projeto.
       </Typography>
-      {/* Aqui você pode adicionar informações sobre a stack tecnológica */}
     </Box>
   );
 }
