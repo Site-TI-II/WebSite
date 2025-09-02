@@ -39,10 +39,10 @@ export const questionarioData: QuestionarioItem[] = [
   },
   {
     pergunta: "10. Quais são as principais entidades, atributos, relacionamento e restrições do banco de dados do projeto?",
-    resposta: "Não respondido ainda."
+    resposta: ""
   },
   {
     pergunta: "11. Quais são os recursos de sistemas inteligentes e inteligência artificial a serem adotados no projeto?",
-    resposta: "Não respondido ainda."
+    resposta: "Os recursos de sistemas inteligentes e Inteligência Artificial a serem adotados no projeto a princípio são vistos como recomendação de Tarefas Personalizadas, Assistente Virtual e Otimização de Recursos."
   }
 ];
