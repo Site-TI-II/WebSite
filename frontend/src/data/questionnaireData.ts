@@ -7,15 +7,15 @@ export const questionarioData: QuestionarioItem[] = [
   },  
   {
     pergunta: "2. Qual é o problema tratado pelo projeto?",
-    resposta: "Dificuldade em organizar e gerenciar tarefas cotidianas."
+    resposta: "Dificuldade em organizar e gerenciar tarefas cotidianas adjascentes a casa e vida pessoal. Assim melhorando a produtividade e qualidade de vida."
   },
   {
     pergunta: "3. Para qual público o projeto se destina?",
-    resposta: "O público alvo seriam pessoas que recentemente se mudaram ou tem dificuldade de gerenciamento da sua casa. Muitas das vezes, no meio de muita coisa pra fazer (trabalho, estudo), acabamos negligenciando as tarefas de casa e transformamos ela em algo muito maior do que deveria ser. Mess Away pretende ajudar com isso."
+    resposta: "O público alvo seriam pessoas que recentemente se mudaram ou pessoas com dificuldade de gerenciamento da sua casa. Muitas das vezes, no meio de muita coisa pra fazer (trabalho, estudo), acabamos negligenciando as tarefas de casa e transformamos ela em algo muito maior do que deveria ser. Mess Away pretende ajudar com isso."
   },
   {
     pergunta: "4. Quais foram as principais motivações para o desenvolvimento do projeto?",
-    resposta: "Queríamos algo único e que fosse relevante não só para a gente, como para nossos familiares e amigos. Algo que fosse universal e realista para pessoas de múltiplas idades."
+    resposta: "Queríamos algo único e que fosse relevante não só para a gente, como para nossos familiares e amigos. Algo que fosse realista e palpável, fácil, para pessoas de múltiplas idades."
   },
   {
     pergunta: "5. Qual é o objetivo do projeto?",
@@ -23,19 +23,19 @@ export const questionarioData: QuestionarioItem[] = [
   },
   {
     pergunta: "6. Que impacto o projeto trará para seu público e para a sociedade?",
-    resposta: "Uma facilitação da vida de pessoas, da convivência, ajudando até mesmo no aspecto financeiro e na produtividade."
+    resposta: "Uma facilitação da vida de pessoas, da convivência, ajudando até mesmo no aspecto financeiro e na produtividade. Além de grandes impactos na saúde mental e física, já que a organização do nosso ambiente é um fator muito importante para o bem-estar."
   },
   {
     pergunta: "7. Qual é o diferencial/inovação do projeto em relação ao que já existe?",
-    resposta: "Não respondido ainda."
+    resposta: "Interface user-friendly para usuários que não querem muitos toques e manutenções, IA para distribuição de tarefas baseada na rotina dos membros, diferentes tipos de sistemas de rotinas e  maior abrangência de funcionalidades, indo desde o gerenciamento das tarefas da casa em si, até no auxílio do em planos financeiro e de compras."
   },
   {
     pergunta: "8. Como o projeto se sustentará? Quais são os mecanismos de monetização?",
-    resposta: "O projeto se sustentaria monetariamente por meio de propagandas que podem ser utilizadas para o desbloqueio de funcionalidades \"premium\" e por meio de uma mensalidade que melhoraria as funcionalidades."
+    resposta: "O projeto se sustentaria monetariamente por meio de propagandas que podem ser utilizadas para o desbloqueio de funcionalidades \"premium\" e por meio de uma mensalidade que melhoraria as funcionalidades, já impostas no app, como paletas de cores, temas, melhor assistência, entre outros."
   },
   {
     pergunta: "9. Como é o fluxo de usuários (User Flow) no sistema a ser desenvolvido?",
-    resposta: "Não respondido ainda."
+    resposta: "O usuário realiza o cadastro ou login, acessa o painel principal, onde pode visualizar tarefas, adicionar novas atividades, editar ou excluir tarefas existentes, acompanhar o progresso das tarefas, receber recomendações inteligentes, e gerenciar configurações do perfil e dos membros da residência."
   },
   {
     pergunta: "10. Quais são as principais entidades, atributos, relacionamento e restrições do banco de dados do projeto?",
