@@ -39,7 +39,7 @@ export const questionarioData: QuestionarioItem[] = [
   },
   {
     pergunta: "10. Quais são as principais entidades, atributos, relacionamento e restrições do banco de dados do projeto?",
-    resposta: ""
+    resposta: "As principais entidades do banco de dados do projeto incluem Usuário, Tarefa, Residência, Membro e Categoria. Cada entidade possui atributos específicos, como ID, nome, descrição, data de criação, status, entre outros. Os relacionamentos entre as entidades são estabelecidos para garantir a integridade dos dados e facilitar consultas eficientes. Restrições são aplicadas para assegurar que os dados inseridos estejam dentro dos parâmetros definidos, como formatos de data, valores obrigatórios e unicidade de certos campos."
   },
   {
     pergunta: "11. Quais são os recursos de sistemas inteligentes e inteligência artificial a serem adotados no projeto?",
